@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detail AI</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">AI Hub</div>
+  <div class="actions">
+    <button onclick="history.back()">← Kembali</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="card" id="aiDetail">
+    <p>Loading...</p>
+  </section>
+</main>
+
+<script>
+const apiBase = '';
+
+async function api(path) {
+  const res = await fetch(apiBase + path);
+  return res.json();
+}
+
+async function loadDetail() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  if (!id) return;
+
+  const data = await api("/api/ai/" + id);
+  if (!data.ai) {
+    document.getElementById("aiDetail").innerHTML = "<p>AI tidak ditemukan</p>";
+    return;
+  }
+
+  const ai = data.ai;
+
+  document.getElementById("aiDetail").innerHTML = `
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <img src="${ai.icon_url || 'https://via.placeholder.com/80'}" style="width:80px;border-radius:12px" />
+      <div>
+        <h2>${ai.title}</h2>
+        <p><b>Kategori:</b> ${ai.category_name || '-'}</p>
+      </div>
+    </div>
+
+    <hr style="margin:20px 0">
+<h3>Deskripsi</h3>
+<p>${ai.full_description || ai.description || 'Belum ada deskripsi'}</p>
+
+<h3>Keunggulan</h3>
+<ul>
+  ${
+    ai.pros
+      ? ai.pros.split(',').map(p => `<li>${p.trim()}</li>`).join('')
+      : '<li>Belum ada data</li>'
+  }
+</ul>
+
+<h3>Kekurangan</h3>
+<ul>
+  ${
+    ai.cons
+      ? ai.cons.split(',').map(c => `<li>${c.trim()}</li>`).join('')
+      : '<li>Belum ada data</li>'
+  }
+</ul>
+
+
+    <a href="${ai.url}" target="_blank">
+      <button style="margin-top:20px">Buka Website AI</button>
+    </a>
+  `;
+}
+
+loadDetail();
+</script>
+
+</body>
+</html>

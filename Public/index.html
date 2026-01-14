@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Hub - Simple</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">AI Hub</div>
+      <div class="actions">
+        <button id="darkToggle">Dark</button>
+        <button id="btnLogin">Login / Register</button>
+        <button id="btnDashboard">Dashboard</button>
+        <button id="btnLogout" style="display: none">Logout</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero card">
+        <h1>Temukan AI berdasarkan fungsi</h1>
+        <div class="search-row">
+          <input id="searchInput" placeholder="Cari AI, misal: belajar, edit video, generate..." />
+          <button type="button" id="searchBtn">Cari</button>
+
+        </div>
+      </section>
+
+      <section class="card" id="categoriesSection">
+        <h2>Kategori</h2>
+        <div id="categories"></div>
+      </section>
+
+      <section class="card" id="aiSection">
+        <h2>Daftar AI</h2>
+        <div id="aiList"></div>
+      </section>
+
+      <section class="card" id="favoritesSection" style="display: none">
+        <h2>Favorit Kamu</h2>
+        <div id="favList"></div>
+      </section>
+    </main>
+
+    <!-- Login / Register modal -->
+    <div id="authModal" class="modal" style="display: none">
+      <div class="modal-card">
+        <button id="closeAuth">✕</button>
+        <h3 id="authTitle">Login</h3>
+
+        <form id="authForm">
+          <input type="text" id="nameField" placeholder="Nama (untuk register)" style="display: none" />
+          <input type="email" id="emailField" placeholder="Email" required />
+          <input type="password" id="passField" placeholder="Password" required />
+          <div class="actions-row">
+            <button type="submit" id="authSubmit">Login</button>
+            <button type="button" id="switchToRegister">Daftar</button>
+          </div>
+        </form>
+
+        <div style="margin-top: 10px">
+          <div id="g_id_onload" data-client_id="REPLACE_WITH_GOOGLE_CLIENT_ID" data-context="signin" data-ux_mode="popup" data-callback="handleGoogleCredentialResponse"></div>
+          <div class="g_id_signin" data-type="standard"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // small helper: replace Google client ID placeholder from server-side .env when building.
+      // We'll replace it later in instructions. For now script will be patched by user.
+    </script>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
